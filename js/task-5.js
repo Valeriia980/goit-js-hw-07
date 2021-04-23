@@ -4,10 +4,8 @@ const newInp = {
 };
 
 function inputChange(result) {
-    if (result.currentTarget.value.length === 0) {
-        newInp.span.textContent = 'незнакомец';
-    }
-    else { newInp.span.textContent = result.currentTarget.value; }
+    let name = result.currentTarget.value;
+    newInp.span.textContent = name.length === 0 ? 'незнакомец' : name;
 }
 
 newInp.input.addEventListener('input', inputChange);  
