@@ -3,29 +3,31 @@ const createElementBtn = document.querySelector('[data-action="render"]');
 const deleteElementBtn = document.querySelector('[data-action="destroy"]');
 const boxes = document.querySelector('#boxes');
 
-function createBoxes() {
-    const size = 30;
-    
-    for (let i = 0; i < inputNew.value; i += 1) {   
-    const max = 256;
-    let pink = Math.floor(Math.random() * max);
-    let purple = Math.floor(Math.random() * max);
-        let blue = Math.floor(Math.random() * max);
-        
-        const box = document.createElement('div');
-        box.classList.add('box');
-        box.style.width = `${size+i*10}px`;
-        box.style.height = `${size+i*10}px`;
-        box.style.backgroundColor = `rgb(${pink}, ${purple}, ${blue})`;
-        box.style.marginRight = "10px";
-        box.style.marginTop = "10px";
-        boxes.append(box);
-    }
+const primary = inputNew.value;
+
+const randomColor = () => { 
+const firstColor = Math.round(Math.random() * (255 - 1) + 1);
+const secondColor = Math.round(Math.random() * (255 - 1) + 1);
+const thirdColor = Math.round(Math.random() * (255 - 1) + 1);
+    return `rgb(${firstColor},${secondColor},${thirdColor})`
 }
-createElementBtn.addEventListener('click', createBoxes);
-deleteElementBtn.addEventListener('click', destroyBoxes);
+
+const someSize = 30;
+const sizeNew = 10;
+
+createElementBtn.addEventListener('click', ()=>createBoxes(+inputNew.value))
+deleteElementBtn.addEventListener('click', destroyBoxes)
+
+function createBoxes(amount) { 
+    const boxesNew = [...new Array(amount)]
+    const arrayBoxes = boxesNew.map((_, i) => {
+    return    `<div style="width: ${someSize + sizeNew * i}px; height:${someSize + sizeNew * i}px; background-color: ${randomColor()}"></div>`
+    }).join('')
+
+    boxes.innerHTML = arrayBoxes
+    }
 
 function destroyBoxes() {
-    boxes.innerHTML = '';
-    inputNew.value = '';
+   boxes.innerHTML = ''
+    inputNew.value = ''
 }
